@@ -1,202 +1,139 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-// Dynamic import of 3D scene to prevent SSR issues
-const HeroScene = dynamic(() => import("@/components/3d/HeroScene"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="relative">
-        <div className="w-32 h-32 rounded-full border border-blue-500/30 animate-ping absolute inset-0" />
-        <div className="w-32 h-32 rounded-full border border-blue-400/20 animate-pulse" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce" />
-        </div>
-      </div>
-    </div>
-  ),
-});
-
-const WHATSAPP_URL =
-  "https://wa.me/97125463666?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20courses.";
-
-const stagger = {
-  container: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
-  item: {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
-  },
-};
-
 export default function Hero() {
-  const [search, setSearch] = useState("");
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      router.push(`/courses?q=${encodeURIComponent(search.trim())}`);
-    }
-  };
-
   return (
-    <section
-      className="relative min-h-screen flex items-center bg-mesh overflow-hidden"
-      id="hero"
-    >
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-600/5 blur-[100px] rounded-full pointer-events-none" />
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#09090E]" id="hero">
+      {/* Background Image with heavy overlay */}
+      <div 
+        className="absolute inset-0 z-0 opacity-40 pointer-events-none"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2940&auto=format&fit=crop")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          mixBlendMode: 'luminosity'
+        }}
+      />
+      
+      {/* Heavy gradients to blend image into dark background */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#09090E] via-[#09090E]/90 to-[#09090E]/40" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-[#09090E] via-transparent to-[#09090E]/80" />
+      
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-50 z-[2] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          {/* ── Left: Text Content ── */}
-          <motion.div
-            initial="hidden"
-            animate={mounted ? "visible" : "hidden"}
-            variants={stagger.container}
-            className="flex flex-col gap-6 lg:gap-7"
-          >
-            {/* Label badge */}
-            <motion.div variants={stagger.item}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-300 text-xs font-medium tracking-widest">
-                <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-                ANNEX TRAINING INSTITUTE — ABU DHABI
-              </span>
-            </motion.div>
+      {/* Glowing Orbs (AIBI Style) */}
+      <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-[-10%] right-[-5%]" />
+      <div className="glow-orb glow-orb-cyan w-[400px] h-[400px] bottom-[-5%] left-[-10%]" style={{ animationDelay: '-4s' }} />
 
-            {/* Main Headline */}
-            <motion.div variants={stagger.item}>
-              <h1 className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight">
-                <span className="text-white">Build Skills.</span>
-                <br />
-                <span className="gradient-text">Advance</span>
-                <br />
-                <span className="text-white">Your Career.</span>
-              </h1>
-            </motion.div>
-
-            {/* Subtext */}
-            <motion.p
-              variants={stagger.item}
-              className="text-slate-400 text-lg leading-relaxed max-w-lg"
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-32 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[calc(100vh-10rem)]">
+          
+          {/* ── Left: Content (Col span 7) ── */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={mounted ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Professional training programs in Abu Dhabi, UAE. From healthcare to technology, engineering to languages — discover the course that transforms your career.
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
+                <span className="text-xs font-bold tracking-widest text-white uppercase">Future-Ready Education</span>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={mounted ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-5xl sm:text-6xl xl:text-7xl font-extrabold text-white leading-[1.08] tracking-tight"
+            >
+              Master Your Skills.<br />
+              Advance Your <span className="text-gradient-purple">Career.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={mounted ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-[#94A3B8] text-lg sm:text-xl leading-relaxed max-w-xl"
+            >
+              Transform your future with Abu Dhabi&apos;s leading training institute. Practical experience, expert instructors, and government-recognized certifications.
             </motion.p>
 
-            {/* CTAs */}
+            {/* Quick Stats Row */}
             <motion.div
-              variants={stagger.item}
-              className="flex flex-wrap gap-3"
-            >
-              <Link
-                href="/courses"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] text-sm"
-                id="hero-explore-courses"
-              >
-                Explore Courses
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/10 hover:border-white/20 font-medium rounded-xl transition-all duration-200 text-sm"
-                id="hero-talk-advisor"
-              >
-                Talk to an Advisor
-              </a>
-            </motion.div>
-
-            {/* Search Bar */}
-            <motion.form
-              variants={stagger.item}
-              onSubmit={handleSearch}
-              className="flex items-center gap-0 max-w-md"
-              id="hero-search-form"
-            >
-              <div className="flex-1 flex items-center gap-3 bg-white/[0.05] border border-white/10 rounded-l-xl px-4 py-3 focus-within:border-blue-500/60 focus-within:bg-white/[0.08] transition-all duration-200">
-                <svg className="w-4 h-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search courses, skills or certifications..."
-                  className="flex-1 bg-transparent text-white placeholder-slate-500 text-sm focus:outline-none"
-                  id="hero-search-input"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-r-xl transition-colors duration-200 border border-blue-600"
-                id="hero-search-btn"
-              >
-                Search
-              </button>
-            </motion.form>
-
-            {/* Stats mini-row */}
-            <motion.div
-              variants={stagger.item}
-              className="flex items-center gap-6 pt-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={mounted ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-wrap gap-4 mt-2"
             >
               {[
-                { value: "100+", label: "Courses" },
-                { value: "20+", label: "Trainers" },
-                { value: "500+", label: "Students" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col">
-                  <span className="text-2xl font-bold text-white">{stat.value}</span>
-                  <span className="text-xs text-slate-500">{stat.label}</span>
+                { label: "10,000+ Students", icon: "🎓" },
+                { label: "95% Placement", icon: "💼" },
+                { label: "Expert Mentors", icon: "⭐" }
+              ].map(stat => (
+                <div key={stat.label} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+                  <span className="text-lg">{stat.icon}</span>
+                  <span className="text-white text-sm font-semibold">{stat.label}</span>
                 </div>
               ))}
-              <div className="h-8 w-px bg-white/10 mx-2" />
-              <div className="flex items-center gap-1.5">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <svg key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-                <span className="text-xs text-slate-500">Excellent Rating</span>
-              </div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* ── Right: 3D Scene ── */}
+          {/* ── Right: Lead Form (Col span 5) ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden lg:flex items-center justify-center"
-            style={{ height: "600px" }}
+            animate={mounted ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.5, type: "spring" }}
+            className="lg:col-span-5 w-full max-w-md mx-auto lg:ml-auto"
           >
-            {/* Glow ring behind canvas */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-80 h-80 rounded-full bg-blue-600/5 blur-3xl" />
-              <div className="absolute w-60 h-60 rounded-full bg-indigo-600/8 blur-2xl animate-pulse" />
-            </div>
-            {/* R3F Canvas */}
-            <div className="relative z-10 w-full h-full">
-              <HeroScene />
+            <div className="glass-card rounded-[2rem] p-8 relative overflow-hidden">
+              {/* Inner subtle glow */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00E5FF] to-[#7C3AED]" />
+              
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-white mb-2">Start Your Journey</h3>
+                <p className="text-[#94A3B8] text-sm">Join the elite academy experience today.</p>
+              </div>
+
+              <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase">Full Name</label>
+                  <input type="text" placeholder="John Doe" className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all" />
+                </div>
+                
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase">Contact Number</label>
+                  <input type="tel" placeholder="+971 50 000 0000" className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all" />
+                </div>
+                
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase">Course of Interest</label>
+                  <select className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all appearance-none cursor-pointer">
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="medical">Medical Coding</option>
+                    <option value="tech">Programming & IT</option>
+                    <option value="design">Design & AutoCAD</option>
+                    <option value="language">Languages & IELTS</option>
+                  </select>
+                </div>
+
+                <button className="btn-premium w-full mt-2" type="submit">
+                  <span>Apply Now</span>
+                </button>
+              </form>
             </div>
           </motion.div>
         </div>
@@ -206,11 +143,11 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
       >
-        <span className="text-slate-600 text-xs tracking-widest">SCROLL</span>
-        <div className="w-px h-12 bg-gradient-to-b from-slate-600 to-transparent" />
+        <span className="text-[10px] tracking-[0.2em] text-white font-bold">SCROLL</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
       </motion.div>
     </section>
   );

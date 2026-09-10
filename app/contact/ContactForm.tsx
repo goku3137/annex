@@ -1,94 +1,113 @@
 "use client";
 
+import { useState } from "react";
+import { motion } from "motion/react";
+
 export default function ContactForm() {
-  return (
-    <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8">
-      <h2 className="text-2xl font-bold text-white mb-2">Send Us a Message</h2>
-      <p className="text-slate-500 text-sm mb-7">
-        Fill in the form below and our team will get back to you within one business day.
-      </p>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          alert("Thank you! We will contact you shortly.");
-        }}
-        id="contact-form"
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    // Simulate API call
+    setTimeout(() => setStatus("success"), 1500);
+  };
+
+  if (status === "success") {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="glass-card rounded-[2rem] p-12 text-center"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs text-slate-400 mb-1.5 font-medium" htmlFor="contact-name">
-              Full Name *
-            </label>
-            <input
-              id="contact-name"
-              type="text"
-              required
-              placeholder="Your full name"
-              className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-xs text-slate-400 mb-1.5 font-medium" htmlFor="contact-phone">
-              Phone Number *
-            </label>
-            <input
-              id="contact-phone"
-              type="tel"
-              required
-              placeholder="+971 __ ______"
-              className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors text-sm"
-            />
-          </div>
+        <div className="w-20 h-20 bg-[#00E5FF]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span className="text-4xl text-[#00E5FF]">✓</span>
         </div>
-        <div>
-          <label className="block text-xs text-slate-400 mb-1.5 font-medium" htmlFor="contact-email">
-            Email Address
-          </label>
-          <input
-            id="contact-email"
-            type="email"
-            placeholder="your@email.com"
-            className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-slate-400 mb-1.5 font-medium" htmlFor="contact-course">
-            Interested Course
-          </label>
-          <input
-            id="contact-course"
-            type="text"
-            placeholder="e.g. Medical Coding, IELTS, Python..."
-            className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-slate-400 mb-1.5 font-medium" htmlFor="contact-message">
-            Message *
-          </label>
-          <textarea
-            id="contact-message"
-            required
-            rows={4}
-            placeholder="Tell us how we can help..."
-            className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors text-sm resize-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)] mt-1"
-          id="contact-submit"
-        >
-          Send Message →
-        </button>
-        <p className="text-center text-xs text-slate-600">
-          Or call us directly at{" "}
-          <a href="tel:+97125463666" className="text-blue-400 hover:underline">
-            +971 2 5463 666
-          </a>
+        <h3 className="text-2xl font-bold text-white mb-4">Message Sent</h3>
+        <p className="text-[#94A3B8] mb-8">
+          Thank you for reaching out. Our team will get back to you within 24 hours.
         </p>
-      </form>
-    </div>
+        <button
+          onClick={() => setStatus("idle")}
+          className="btn-outline"
+        >
+          Send Another Message
+        </button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <div className="grid sm:grid-cols-2 gap-5">
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">First Name *</label>
+          <input
+            type="text"
+            required
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            placeholder="John"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Last Name *</label>
+          <input
+            type="text"
+            required
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            placeholder="Doe"
+          />
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-5">
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Email Address *</label>
+          <input
+            type="email"
+            required
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            placeholder="john@example.com"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Phone Number</label>
+          <input
+            type="tel"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            placeholder="+971 50 000 0000"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Course of Interest</label>
+        <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all appearance-none cursor-pointer">
+          <option value="">General Enquiry</option>
+          <option value="medical">Medical Coding</option>
+          <option value="tech">Programming & IT</option>
+          <option value="design">Design & AutoCAD</option>
+          <option value="language">Languages & IELTS</option>
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Your Message *</label>
+        <textarea
+          required
+          rows={4}
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all resize-none"
+          placeholder="How can we help you?"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="btn-premium w-full mt-4 py-4"
+      >
+        <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>
+      </button>
+    </form>
   );
 }

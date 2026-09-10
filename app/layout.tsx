@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
-      <body className="min-h-screen bg-navy-900 text-slate-100 antialiased overflow-x-hidden">
+      <body className="min-h-screen bg-[#080D1A] text-[#E2E8F0] antialiased overflow-x-hidden">
         <Navbar />
         <main>{children}</main>
         <Footer />
