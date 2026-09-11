@@ -1,5 +1,6 @@
 import About from "@/components/sections/About";
 import Testimonials from "@/components/sections/Testimonials";
+import { Target, Eye } from "lucide-react";
 
 export const metadata = {
   title: "About Us | Annex Training Institute",
@@ -8,54 +9,64 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#09090E] pt-24">
+    <div style={{ background: 'var(--color-brand-black)', minHeight: '100vh', paddingBottom: '4rem' }}>
       {/* Premium Hero Banner */}
-      <section className="relative py-24 overflow-hidden border-b border-white/[0.05]">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577415124269-b9140d53610f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-luminosity" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#09090E] via-[#09090E]/80 to-[#09090E]" />
-        <div className="glow-orb glow-orb-purple w-[500px] h-[500px] top-0 left-[-10%] opacity-40" />
+      <section style={{ position: 'relative', paddingTop: '10rem', paddingBottom: '6rem', overflow: 'hidden', borderBottom: '1px solid var(--color-brand-border)' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <img 
+            src="https://images.unsplash.com/photo-1577415124269-b9140d53610f?q=80&w=2000&auto=format&fit=crop" 
+            alt="About Background" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.15 }}
+          />
+        </div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--color-brand-black), transparent)', zIndex: 1 }} />
+        <div className="bg-grid-premium" style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.3 }} />
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 text-[#00E5FF] text-xs font-bold tracking-widest uppercase mb-6">
-            <span className="w-1.5 h-1.5 bg-[#00E5FF] rounded-full" />
+        <div className="premium-container" style={{ position: 'relative', zIndex: 10, padding: '0 5%', textAlign: 'center' }}>
+          <div className="fade-up stagger-1" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 1rem', borderRadius: '50px', border: '1px solid var(--color-brand-accent)', background: 'var(--color-brand-accent-glow)', color: 'var(--color-brand-accent)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+            <span style={{ width: '6px', height: '6px', background: 'var(--color-brand-accent)', borderRadius: '50%' }} />
             About Annex
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-            Empowering Your <br />
-            <span className="text-gradient-purple">Future</span>
+          <h1 className="premium-title fade-up">
+            Empowering Your Future
           </h1>
-          <p className="text-[#94A3B8] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="premium-subtitle fade-up stagger-2" style={{ maxWidth: '800px', margin: '0 auto' }}>
             Since 2014, we have been committed to delivering world-class professional education that bridges the gap between ambition and achievement.
           </p>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-24 relative">
-        <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="glass-panel rounded-[2rem] p-10 relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#7C3AED] to-[#00E5FF]" />
-              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6">
-                🎯
+      <section style={{ padding: '6rem 0', position: 'relative' }}>
+        <div className="premium-container" style={{ padding: '0 5%' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            
+            <div className="glass-panel fade-up stagger-1" style={{ position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--color-brand-accent-glow) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+                  <Target className="w-8 h-8" style={{ color: 'var(--color-brand-accent)' }} />
+                </div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '1rem' }}>Our Mission</h2>
+                <p style={{ color: 'var(--color-brand-text-muted)', lineHeight: '1.8' }}>
+                  To provide high-quality, industry-relevant training that equips individuals and organizations with the skills necessary to excel in a rapidly evolving global market. We strive to foster an environment of continuous learning and innovation.
+                </p>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-4">Our Mission</h2>
-              <p className="text-[#94A3B8] leading-relaxed">
-                To provide high-quality, industry-relevant training that equips individuals and organizations with the skills necessary to excel in a rapidly evolving global market. We strive to foster an environment of continuous learning and innovation.
-              </p>
             </div>
             
-            <div className="glass-panel rounded-[2rem] p-10 relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00E5FF] to-[#7C3AED]" />
-              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6">
-                👁️
+            <div className="glass-panel fade-up stagger-2" style={{ position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
+                  <Eye className="w-8 h-8" style={{ color: 'var(--color-brand-white)' }} />
+                </div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '1rem' }}>Our Vision</h2>
+                <p style={{ color: 'var(--color-brand-text-muted)', lineHeight: '1.8' }}>
+                  To be the leading training institute in the Middle East, recognized for our excellence in education, commitment to student success, and our pivotal role in shaping the workforce of tomorrow.
+                </p>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-4">Our Vision</h2>
-              <p className="text-[#94A3B8] leading-relaxed">
-                To be the leading training institute in the Middle East, recognized for our excellence in education, commitment to student success, and our pivotal role in shaping the workforce of tomorrow.
-              </p>
             </div>
+
           </div>
         </div>
       </section>
@@ -64,7 +75,9 @@ export default function AboutPage() {
       <About />
       
       {/* Use the shared Testimonials component */}
-      <Testimonials />
+      <div style={{ paddingTop: '4rem' }}>
+        <Testimonials />
+      </div>
     </div>
   );
 }

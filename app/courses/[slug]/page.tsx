@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { courses } from "@/data/courses";
+import { Star, BookOpen, Check, Clock, Building, Award, Phone } from "lucide-react";
 
 // Generate static params for all courses at build time
 export function generateStaticParams() {
@@ -18,63 +19,58 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-const catImages: Record<string, string> = {
-  "medical-healthcare": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2000&auto=format&fit=crop",
-  "programming-data": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop",
-  "designing-creative": "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop",
-  "engineering-cad": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000&auto=format&fit=crop",
-  "it-networking": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2000&auto=format&fit=crop",
-  "languages-english": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000&auto=format&fit=crop",
-  "accounting": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2000&auto=format&fit=crop",
-  "digital-marketing": "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2000&auto=format&fit=crop",
-};
-
 export default function CourseDetailPage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
   if (!course) notFound();
 
   const WHATSAPP = `https://wa.me/97125463666?text=Hello%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(course.title)}%20course.`;
-  const bgImage = catImages[course.categorySlug] || catImages["programming-data"];
 
   return (
-    <div className="bg-[#09090E] min-h-screen">
+    <div style={{ background: 'var(--color-brand-black)', minHeight: '100vh', paddingBottom: '5rem' }}>
       {/* ── Hero Section ── */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden border-b border-white/[0.05]">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity"
-          style={{ backgroundImage: `url(${bgImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#09090E] via-[#09090E]/80 to-[#09090E]/50" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <section style={{ position: 'relative', paddingTop: '10rem', paddingBottom: '6rem', overflow: 'hidden', borderBottom: '1px solid var(--color-brand-border)' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          {course.image ? (
+            <img 
+              src={course.image}
+              alt="Course Background" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.15 }}
+            />
+          ) : (
+            <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #111, #222)', opacity: 0.5 }}></div>
+          )}
+        </div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--color-brand-black), transparent)', zIndex: 1 }} />
+        <div className="bg-grid-premium" style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.3 }} />
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <Link href="/courses" className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-white text-sm font-bold tracking-widest uppercase mb-8 transition-colors">
+        <div className="premium-container" style={{ position: 'relative', zIndex: 10, padding: '0 5%' }}>
+          <Link href="/courses" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-brand-text-muted)', textDecoration: 'none', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', transition: 'color 0.3s ease' }} className="hover-glow">
             ← Back to Programs
           </Link>
 
-          <div className="flex flex-col lg:flex-row gap-12 lg:items-end justify-between">
-            <div className="max-w-3xl">
-              <div className="flex flex-wrap items-center gap-3 mb-6">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 text-[#00E5FF] text-[10px] font-bold tracking-widest uppercase">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 1rem', borderRadius: '50px', border: '1px solid var(--color-brand-accent)', background: 'var(--color-brand-accent-glow)', color: 'var(--color-brand-accent)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   {course.icon} {course.category}
                 </span>
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/10 text-[#A855F7] text-[10px] font-bold tracking-widest uppercase">
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 1rem', borderRadius: '50px', border: '1px solid var(--color-brand-border)', background: 'rgba(255, 255, 255, 0.1)', color: 'var(--color-brand-white)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   Level: {course.level}
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
+              <h1 className="premium-title fade-up">
                 {course.title}
               </h1>
-              <p className="text-[#94A3B8] text-lg md:text-xl leading-relaxed">
+              <p className="premium-subtitle fade-up stagger-1" style={{ margin: 0, textAlign: 'left' }}>
                 {course.shortDescription}
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }} className="fade-up stagger-2">
               <Link href="/contact" className="btn-premium">
-                <span>Enroll Now</span>
+                Enroll Now
               </Link>
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="btn-premium-outline">
                 WhatsApp Us
               </a>
             </div>
@@ -83,19 +79,26 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
       </section>
 
       {/* ── Content ── */}
-      <section className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
+      <section style={{ padding: '4rem 0', position: 'relative' }}>
+        <div className="premium-container" style={{ padding: '0 5%' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
             
             {/* Left: Main Content */}
-            <div className="lg:col-span-8 flex flex-col gap-12">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', flex: '2 1 600px' }}>
               
+              {/* Image highlight */}
+              {course.curriculumImage && (
+                <div className="glass-panel" style={{ padding: 0, height: '300px', overflow: 'hidden' }}>
+                   <img src={course.curriculumImage} alt="Curriculum" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              )}
+
               {/* Overview */}
-              <div className="glass-panel rounded-[2rem] p-8 md:p-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <span className="text-[#00E5FF]">✦</span> Program Overview
+              <div className="glass-panel fade-up stagger-1">
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <Star className="w-5 h-5" style={{ color: 'var(--color-brand-accent)' }} /> Program Overview
                 </h2>
-                <div className="text-[#94A3B8] leading-relaxed space-y-4">
+                <div style={{ color: 'var(--color-brand-text-muted)', lineHeight: '1.8', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <p>
                     The {course.title} program is designed to provide you with the most up-to-date, industry-relevant skills. Whether you're looking to start a new career, upskill in your current role, or earn a globally recognized certification, this course provides a comprehensive pathway to success.
                   </p>
@@ -106,11 +109,11 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
               </div>
 
               {/* What you will learn */}
-              <div className="glass-panel rounded-[2rem] p-8 md:p-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <span className="text-[#7C3AED]">✦</span> What You Will Learn
+              <div className="glass-panel fade-up stagger-2">
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <BookOpen className="w-5 h-5" style={{ color: 'var(--color-brand-accent)' }} /> What You Will Learn
                 </h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
                   {[
                     "Industry-standard tools and workflows",
                     "Practical problem-solving techniques",
@@ -119,9 +122,11 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                     "Preparation for certification exams",
                     "Portfolio development strategies"
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-[#7C3AED]/20 border border-[#7C3AED]/40 flex items-center justify-center text-[#A855F7] text-xs shrink-0 mt-0.5">✓</div>
-                      <span className="text-[#94A3B8] text-sm leading-relaxed">{item}</span>
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                      <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--color-brand-accent-glow)', border: '1px solid var(--color-brand-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-accent)', flexShrink: 0 }}>
+                        <Check className="w-4 h-4" />
+                      </div>
+                      <span style={{ color: 'var(--color-brand-text)', fontSize: '0.9rem', lineHeight: '1.5' }}>{item}</span>
                     </div>
                   ))}
                 </div>
@@ -130,45 +135,50 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
             </div>
 
             {/* Right: Sidebar / Meta */}
-            <div className="lg:col-span-4 sticky top-32 flex flex-col gap-6">
-              
-              <div className="glass-card rounded-[2rem] p-8">
-                <h3 className="text-white font-bold text-lg mb-6 border-b border-white/10 pb-4">Program Details</h3>
+            <div style={{ flex: '1 1 300px' }}>
+              <div className="glass-panel fade-up stagger-3" style={{ position: 'sticky', top: '100px' }}>
+                <h3 style={{ color: 'var(--color-brand-white)', fontWeight: 'bold', fontSize: '1.25rem', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-brand-border)' }}>Program Details</h3>
                 
-                <ul className="space-y-6">
-                  <li className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl shrink-0">⏱</div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Clock className="w-5 h-5 text-slate-400" />
+                    </div>
                     <div>
-                      <div className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase">Duration</div>
-                      <div className="text-white font-medium">{course.duration}</div>
+                      <div style={{ fontSize: '0.65rem', fontWeight: 'bold', color: 'var(--color-brand-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Duration</div>
+                      <div style={{ color: 'var(--color-brand-white)', fontWeight: '500' }}>{course.duration}</div>
                     </div>
                   </li>
-                  <li className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl shrink-0">🏢</div>
+                  <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Building className="w-5 h-5 text-slate-400" />
+                    </div>
                     <div>
-                      <div className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase">Training Modes</div>
-                      <div className="flex flex-wrap gap-2 mt-1">
+                      <div style={{ fontSize: '0.65rem', fontWeight: 'bold', color: 'var(--color-brand-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Training Modes</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                         {course.modes.map(m => (
-                          <span key={m} className="px-2 py-1 rounded bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider">{m}</span>
+                          <span key={m} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', color: 'var(--color-brand-white)', fontSize: '0.65rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{m}</span>
                         ))}
                       </div>
                     </div>
                   </li>
                   {course.certification && (
-                    <li className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-[#F5C518]/10 border border-[#F5C518]/20 flex items-center justify-center text-xl shrink-0">🏆</div>
+                    <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(245, 197, 24, 0.1)', border: '1px solid rgba(245, 197, 24, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Award className="w-5 h-5" style={{ color: '#F5C518' }} />
+                      </div>
                       <div>
-                        <div className="text-[10px] font-bold text-[#F5C518] tracking-widest uppercase">Certification</div>
-                        <div className="text-white font-medium">{course.certification}</div>
+                        <div style={{ fontSize: '0.65rem', fontWeight: 'bold', color: '#F5C518', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Certification</div>
+                        <div style={{ color: 'var(--color-brand-white)', fontWeight: '500' }}>{course.certification}</div>
                       </div>
                     </li>
                   )}
                 </ul>
 
-                <div className="mt-8 pt-8 border-t border-white/10">
-                  <h4 className="text-white font-bold text-sm mb-4">Have questions?</h4>
-                  <a href="tel:+97125463666" className="flex items-center gap-3 text-[#94A3B8] hover:text-[#00E5FF] transition-colors mb-3">
-                    <span className="text-xl">📞</span> +971 2 5463 666
+                <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--color-brand-border)' }}>
+                  <h4 style={{ color: 'var(--color-brand-white)', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '1rem' }}>Have questions?</h4>
+                  <a href="tel:+97125463666" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                    <Phone className="w-4 h-4" /> +971 2 5463 666
                   </a>
                 </div>
               </div>

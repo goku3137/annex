@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
+import { Check } from "lucide-react";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -13,23 +14,46 @@ export default function ContactForm() {
     setTimeout(() => setStatus("success"), 1500);
   };
 
+  const inputStyle = {
+    width: '100%',
+    background: 'rgba(255,255,255,0.02)',
+    border: '1px solid var(--color-brand-border)',
+    borderRadius: '12px',
+    padding: '1rem',
+    color: 'var(--color-brand-white)',
+    fontSize: '0.9rem',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+  };
+
+  const labelStyle = {
+    fontSize: '0.65rem',
+    fontWeight: 'bold',
+    color: 'var(--color-brand-text-muted)',
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase' as const,
+    marginLeft: '0.25rem',
+    marginBottom: '0.5rem',
+    display: 'block'
+  };
+
   if (status === "success") {
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="glass-card rounded-[2rem] p-12 text-center"
+        style={{ textAlign: 'center', padding: '2rem 0' }}
       >
-        <div className="w-20 h-20 bg-[#00E5FF]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-4xl text-[#00E5FF]">✓</span>
+        <div style={{ width: '80px', height: '80px', background: 'var(--color-brand-accent-glow)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', border: '1px solid var(--color-brand-accent)' }}>
+          <Check className="w-10 h-10" style={{ color: 'var(--color-brand-accent)' }} />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">Message Sent</h3>
-        <p className="text-[#94A3B8] mb-8">
+        <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '1rem' }}>Message Sent</h3>
+        <p style={{ color: 'var(--color-brand-text-muted)', marginBottom: '2rem' }}>
           Thank you for reaching out. Our team will get back to you within 24 hours.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="btn-outline"
+          className="btn-premium-outline"
         >
           Send Another Message
         </button>
@@ -38,75 +62,90 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="flex flex-col gap-2">
-          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">First Name *</label>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+        <div>
+          <label style={labelStyle}>First Name *</label>
           <input
             type="text"
             required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            style={inputStyle}
             placeholder="John"
+            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Last Name *</label>
+        <div>
+          <label style={labelStyle}>Last Name *</label>
           <input
             type="text"
             required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            style={inputStyle}
             placeholder="Doe"
+            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
           />
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="flex flex-col gap-2">
-          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Email Address *</label>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+        <div>
+          <label style={labelStyle}>Email Address *</label>
           <input
             type="email"
             required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            style={inputStyle}
             placeholder="john@example.com"
+            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Phone Number</label>
+        <div>
+          <label style={labelStyle}>Phone Number</label>
           <input
             type="tel"
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all"
+            style={inputStyle}
             placeholder="+971 50 000 0000"
+            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
           />
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Course of Interest</label>
-        <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all appearance-none cursor-pointer">
-          <option value="">General Enquiry</option>
-          <option value="medical">Medical Coding</option>
-          <option value="tech">Programming & IT</option>
-          <option value="design">Design & AutoCAD</option>
-          <option value="language">Languages & IELTS</option>
+      <div>
+        <label style={labelStyle}>Course of Interest</label>
+        <select 
+          style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+          onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+          onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
+        >
+          <option value="" style={{ color: '#000' }}>General Enquiry</option>
+          <option value="medical" style={{ color: '#000' }}>Medical Coding</option>
+          <option value="tech" style={{ color: '#000' }}>Programming & IT</option>
+          <option value="design" style={{ color: '#000' }}>Design & AutoCAD</option>
+          <option value="language" style={{ color: '#000' }}>Languages & IELTS</option>
         </select>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase ml-1">Your Message *</label>
+      <div>
+        <label style={labelStyle}>Your Message *</label>
         <textarea
           required
           rows={4}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:border-[#7C3AED] focus:bg-black/40 outline-none transition-all resize-none"
+          style={{ ...inputStyle, resize: 'none' }}
           placeholder="How can we help you?"
+          onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-accent)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+          onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
         />
       </div>
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="btn-premium w-full mt-4 py-4"
+        className="btn-premium"
+        style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}
       >
-        <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>
+        {status === "submitting" ? "Sending..." : "Send Message"}
       </button>
     </form>
   );

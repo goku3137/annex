@@ -18,42 +18,41 @@ const WHATSAPP = "https://wa.me/97125463666?text=Hello%2C%20I%20would%20like%20t
 
 export default function Footer() {
   return (
-    <footer className="bg-[#05050A] pt-24 pb-12 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-[#7C3AED]/50 to-transparent" />
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer style={{ background: 'var(--color-brand-black)', paddingTop: '6rem', paddingBottom: '2rem', position: 'relative', overflow: 'hidden', borderTop: '1px solid var(--color-brand-border)' }}>
+      {/* Decorative Glow */}
+      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '600px', height: '200px', background: 'radial-gradient(ellipse at center, rgba(0, 255, 204, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+
+      <div className="premium-container" style={{ padding: '0 5%', position: 'relative', zIndex: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem', marginBottom: '4rem' }}>
           
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#00E5FF] p-[1px]">
-                <div className="w-full h-full bg-[#05050A] rounded-xl flex items-center justify-center">
-                  <span className="text-white font-black text-xl">A</span>
-                </div>
+          <div>
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem', textDecoration: 'none' }}>
+              <div style={{ width: '40px', height: '40px', background: 'var(--color-brand-accent)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 15px var(--color-brand-accent-glow)' }}>
+                <span style={{ color: 'var(--color-brand-black)', fontWeight: '900', fontSize: '1.2rem', lineHeight: '1' }}>A</span>
               </div>
               <div>
-                <div className="text-white font-bold text-sm tracking-[0.2em] leading-none mb-1">ANNEX</div>
-                <div className="text-[#00E5FF] text-[9px] font-bold tracking-[0.25em] leading-none">INSTITUTE</div>
+                <div style={{ fontWeight: '800', fontSize: '1rem', letterSpacing: '0.15em', color: 'var(--color-brand-white)' }}>ANNEX</div>
+                <div style={{ color: 'var(--color-brand-accent)', fontSize: '0.6rem', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Institute</div>
               </div>
             </Link>
-            <p className="text-[#94A3B8] text-sm leading-relaxed mb-6">
-              Transforming careers through practical, industry-aligned education in Abu Dhabi, UAE.
+            <p style={{ color: 'var(--color-brand-text-muted)', fontSize: '0.9rem', lineHeight: '1.8', marginBottom: '2rem' }}>
+              Transforming careers through rigorous, industry-aligned education in Abu Dhabi, UAE.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#7C3AED] hover:border-[#7C3AED] transition-all">in</a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#7C3AED] hover:border-[#7C3AED] transition-all">fb</a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#7C3AED] hover:border-[#7C3AED] transition-all">ig</a>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <a href="#" style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-white)', textDecoration: 'none', transition: 'all 0.3s ease' }} className="hover-glow">IN</a>
+              <a href="#" style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-white)', textDecoration: 'none', transition: 'all 0.3s ease' }} className="hover-glow">FB</a>
+              <a href="#" style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid var(--color-brand-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-white)', textDecoration: 'none', transition: 'all 0.3s ease' }} className="hover-glow">IG</a>
             </div>
           </div>
 
           {/* Links 1 */}
           <div>
-            <h3 className="text-white font-bold text-sm tracking-widest uppercase mb-6">Programs</h3>
-            <ul className="space-y-4">
+            <h3 style={{ color: 'var(--color-brand-white)', fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem' }}>Programs</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {footerLinks.programs.map(link => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[#94A3B8] hover:text-[#00E5FF] text-sm transition-colors">
+                  <Link href={link.href} style={{ color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
                     {link.label}
                   </Link>
                 </li>
@@ -63,11 +62,11 @@ export default function Footer() {
 
           {/* Links 2 */}
           <div>
-            <h3 className="text-white font-bold text-sm tracking-widest uppercase mb-6">Company</h3>
-            <ul className="space-y-4">
+            <h3 style={{ color: 'var(--color-brand-white)', fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem' }}>Company</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {footerLinks.company.map(link => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[#94A3B8] hover:text-[#00E5FF] text-sm transition-colors">
+                  <Link href={link.href} style={{ color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
                     {link.label}
                   </Link>
                 </li>
@@ -77,29 +76,32 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-bold text-sm tracking-widest uppercase mb-6">Contact</h3>
-            <div className="space-y-4 text-sm text-[#94A3B8]">
-              <a href="tel:+97125463666" className="flex items-center gap-3 hover:text-white transition-colors">
-                <span className="text-[#00E5FF]">📞</span> +971 2 5463 666
+            <h3 style={{ color: 'var(--color-brand-white)', fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem' }}>Contact</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: 'var(--color-brand-text-muted)' }}>
+              <a href="tel:+97125463666" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                <div style={{ fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-brand-accent)', marginBottom: '0.25rem' }}>Phone</div>
+                +971 2 5463 666
               </a>
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors">
-                <span className="text-[#00E5FF]">💬</span> WhatsApp Us
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                <div style={{ fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-brand-accent)', marginBottom: '0.25rem' }}>WhatsApp</div>
+                Chat With Us
               </a>
-              <div className="flex items-start gap-3">
-                <span className="text-[#00E5FF]">📍</span> 604, Al Falah Tower,<br/>Al Falah St, Abu Dhabi
+              <div>
+                <div style={{ fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-brand-accent)', marginBottom: '0.25rem' }}>Location</div>
+                604, Al Falah Tower,<br/>Al Falah St, Abu Dhabi
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#475569] text-xs">
-            © {new Date().getFullYear()} Annex Training Institute. All rights reserved.
+        <div style={{ paddingTop: '2rem', borderTop: '1px solid var(--color-brand-border)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <p style={{ color: 'var(--color-brand-text-muted)', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            © {new Date().getFullYear()} Annex Training Institute
           </p>
-          <div className="flex gap-4 text-xs text-[#475569]">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <div style={{ display: 'flex', gap: '2rem', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            <Link href="/privacy" style={{ color: 'var(--color-brand-text-muted)', textDecoration: 'none' }} className="hover-glow">Privacy</Link>
+            <Link href="/terms" style={{ color: 'var(--color-brand-text-muted)', textDecoration: 'none' }} className="hover-glow">Terms</Link>
           </div>
         </div>
       </div>

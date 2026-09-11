@@ -42,8 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body className="min-h-screen bg-[#080D1A] text-[#E2E8F0] antialiased overflow-x-hidden">
+    <html lang="en" className={`${inter.variable}`} data-scroll-behavior="smooth">
+      <body className="">
         <Navbar />
         <main>{children}</main>
         <Footer />

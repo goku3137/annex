@@ -1,4 +1,5 @@
 import ContactForm from "./ContactForm";
+import { MapPin, MessageCircle, Phone, Smartphone, Mail, Clock } from "lucide-react";
 
 export const metadata = {
   title: "Contact Us | Annex Training Institute",
@@ -9,36 +10,36 @@ const WHATSAPP = "https://wa.me/97125463666?text=Hello%2C%20I%20would%20like%20t
 
 export default function ContactPage() {
   return (
-    <div className="bg-[#09090E] min-h-screen pt-24 pb-32 relative overflow-hidden">
+    <div style={{ background: 'var(--color-brand-black)', minHeight: '100vh', paddingTop: '8rem', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
       {/* Background elements */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-      <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-0 left-[-10%] opacity-40" />
-      <div className="glow-orb glow-orb-cyan w-[500px] h-[500px] bottom-0 right-[-10%] opacity-30" />
+      <div className="bg-grid-premium" style={{ position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, var(--color-brand-accent-glow) 0%, transparent 60%)', pointerEvents: 'none' }} />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 text-[#00E5FF] text-xs font-bold tracking-widest uppercase mb-6">
-            <span className="w-1.5 h-1.5 bg-[#00E5FF] rounded-full" />
+      <div className="premium-container" style={{ padding: '0 5%', position: 'relative', zIndex: 10 }}>
+        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 4rem' }}>
+          <div className="fade-up" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 1rem', borderRadius: '50px', border: '1px solid var(--color-brand-border)', background: 'rgba(255,255,255,0.05)', color: 'var(--color-brand-white)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+            <span style={{ width: '6px', height: '6px', background: 'var(--color-brand-white)', borderRadius: '50%' }} />
             Get in Touch
           </div>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
-            Let's Start a <span className="text-gradient-cyan">Conversation</span>
+          <h1 className="premium-title fade-up stagger-1">
+            Let's Start a Conversation
           </h1>
-          <p className="text-[#94A3B8] text-lg leading-relaxed">
+          <p className="premium-subtitle fade-up stagger-2" style={{ margin: '0 auto' }}>
             Have questions about our programs, corporate training, or admissions? Our team is ready to help you take the next step.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', alignItems: 'flex-start', maxWidth: '1200px', margin: '0 auto' }}>
           
           {/* Left: Contact Info */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="glass-card rounded-[2rem] p-8 group">
-              <div className="w-12 h-12 bg-[#7C3AED]/20 border border-[#7C3AED]/40 rounded-xl flex items-center justify-center text-2xl mb-6">
-                📍
+          <div style={{ flex: '1 1 350px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            
+            <div className="glass-panel fade-up stagger-1">
+              <div style={{ width: '48px', height: '48px', background: 'var(--color-brand-accent-glow)', border: '1px solid var(--color-brand-accent)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                <MapPin className="w-6 h-6" style={{ color: 'var(--color-brand-accent)' }} />
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Visit Us</h3>
-              <p className="text-[#94A3B8] leading-relaxed mb-4">
+              <h3 style={{ color: 'var(--color-brand-white)', fontWeight: 'bold', fontSize: '1.25rem', marginBottom: '0.5rem' }}>Visit Us</h3>
+              <p style={{ color: 'var(--color-brand-text-muted)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
                 Office 604, Al Falah Tower<br />
                 Al Falah Street<br />
                 Abu Dhabi, UAE
@@ -47,58 +48,58 @@ export default function ContactPage() {
                 href="https://maps.google.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-[#00E5FF] font-bold text-sm hover:underline"
+                style={{ color: 'var(--color-brand-accent)', fontWeight: 'bold', fontSize: '0.85rem', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                className="hover-glow"
               >
                 Get Directions →
               </a>
             </div>
 
-            <div className="glass-card rounded-[2rem] p-8 group">
-              <div className="w-12 h-12 bg-[#00E5FF]/20 border border-[#00E5FF]/40 rounded-xl flex items-center justify-center text-2xl mb-6">
-                💬
+            <div className="glass-panel fade-up stagger-2">
+              <div style={{ width: '48px', height: '48px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                <MessageCircle className="w-6 h-6" style={{ color: 'var(--color-brand-white)' }} />
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Contact Us</h3>
-              <div className="flex flex-col gap-3 mt-4">
-                <a href="tel:+97125463666" className="flex items-center gap-3 text-[#94A3B8] hover:text-white transition-colors">
-                  <span className="text-xl">📞</span> +971 2 5463 666
+              <h3 style={{ color: 'var(--color-brand-white)', fontWeight: 'bold', fontSize: '1.25rem', marginBottom: '1rem' }}>Contact Us</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <a href="tel:+97125463666" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                  <Phone className="w-5 h-5" /> +971 2 5463 666
                 </a>
-                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[#94A3B8] hover:text-white transition-colors">
-                  <span className="text-xl">📱</span> WhatsApp Us
+                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                  <Smartphone className="w-5 h-5" /> WhatsApp Us
                 </a>
-                <a href="mailto:info@annexinstitute.com" className="flex items-center gap-3 text-[#94A3B8] hover:text-white transition-colors">
-                  <span className="text-xl">✉️</span> info@annex.ae
+                <a href="mailto:info@annexinstitute.com" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-brand-text-muted)', textDecoration: 'none', transition: 'color 0.3s ease' }} className="hover-glow">
+                  <Mail className="w-5 h-5" /> info@annex.ae
                 </a>
               </div>
             </div>
 
-            <div className="glass-card rounded-[2rem] p-8">
-              <div className="w-12 h-12 bg-[#F5C518]/20 border border-[#F5C518]/40 rounded-xl flex items-center justify-center text-2xl mb-6">
-                ⏰
+            <div className="glass-panel fade-up stagger-3">
+              <div style={{ width: '48px', height: '48px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-brand-border)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                <Clock className="w-6 h-6" style={{ color: 'var(--color-brand-text)' }} />
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Office Hours</h3>
-              <ul className="space-y-2 mt-4 text-[#94A3B8]">
-                <li className="flex justify-between">
+              <h3 style={{ color: 'var(--color-brand-white)', fontWeight: 'bold', fontSize: '1.25rem', marginBottom: '1rem' }}>Office Hours</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', color: 'var(--color-brand-text-muted)', fontSize: '0.9rem' }}>
+                <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>Monday - Friday:</span>
-                  <span className="text-white font-medium">9:00 AM - 8:00 PM</span>
+                  <span style={{ color: 'var(--color-brand-white)', fontWeight: '500' }}>9:00 AM - 8:00 PM</span>
                 </li>
-                <li className="flex justify-between">
+                <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>Saturday:</span>
-                  <span className="text-white font-medium">10:00 AM - 6:00 PM</span>
+                  <span style={{ color: 'var(--color-brand-white)', fontWeight: '500' }}>10:00 AM - 6:00 PM</span>
                 </li>
-                <li className="flex justify-between">
+                <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>Sunday:</span>
-                  <span className="text-white font-medium">Closed</span>
+                  <span style={{ color: 'var(--color-brand-white)', fontWeight: '500' }}>Closed</span>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Right: Form */}
-          <div className="lg:col-span-7">
-            <div className="glass-panel rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#7C3AED] to-[#00E5FF]" />
-              <h2 className="text-3xl font-bold text-white mb-2">Send a Message</h2>
-              <p className="text-[#94A3B8] mb-8">Fill out the form below and our admissions team will contact you shortly.</p>
+          <div style={{ flex: '2 1 500px' }}>
+            <div className="glass-panel fade-up stagger-2" style={{ padding: '3rem' }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--color-brand-white)', marginBottom: '0.5rem' }}>Send a Message</h2>
+              <p style={{ color: 'var(--color-brand-text-muted)', marginBottom: '2.5rem' }}>Fill out the form below and our admissions team will contact you shortly.</p>
               
               <ContactForm />
             </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-export default function FloatingObjects() {
+function FloatingObjectsScene() {
   const groupRef = useRef<THREE.Group>(null);
   const icosaRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -118,5 +118,15 @@ export default function FloatingObjects() {
         />
       </points>
     </group>
+  );
+}
+
+export default function FloatingObjects() {
+  return (
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-60" aria-hidden="true">
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+        <FloatingObjectsScene />
+      </Canvas>
+    </div>
   );
 }
