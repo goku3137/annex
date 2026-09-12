@@ -1,208 +1,132 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import { Float, Sparkles, MeshDistortMaterial } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-export default function FloatingObjects() {
-  const icosaRef = useRef<THREE.Mesh>(null);
-  const torusRef = useRef<THREE.Mesh>(null);
-  const sphere1Ref = useRef<THREE.Mesh>(null);
-  const sphere2Ref = useRef<THREE.Mesh>(null);
-  const ringRef = useRef<THREE.Mesh>(null);
+function FloatingObjectsScene() {
   const groupRef = useRef<THREE.Group>(null);
+  const icosaRef = useRef<THREE.Mesh>(null);
+  const wireRef = useRef<THREE.Mesh>(null);
+  const ring1Ref = useRef<THREE.Mesh>(null);
+  const ring2Ref = useRef<THREE.Mesh>(null);
   const { pointer } = useThree();
 
-  // Particle positions
+  // Minimal particle set — 300 points only (was 600)
   const particles = useMemo(() => {
-    const count = 600;
-    const positions = new Float32Array(count * 3);
+    const count = 300;
+    const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      positions[i * 3 + 0] = (Math.random() - 0.5) * 18;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 18;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+      const r = 4 + Math.random() * 8;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      pos[i * 3 + 0] = r * Math.sin(phi) * Math.cos(theta);
+      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      pos[i * 3 + 2] = r * Math.cos(phi);
     }
-    return positions;
+    return pos;
   }, []);
 
   useFrame((state, delta) => {
-    const time = state.clock.getElapsedTime();
+    const t = state.clock.getElapsedTime();
 
-    // Subtle mouse parallax on the whole group
+    // Smooth mouse parallax on group
     if (groupRef.current) {
-      groupRef.current.rotation.y +=
-        (pointer.x * 0.3 - groupRef.current.rotation.y) * 0.05;
-      groupRef.current.rotation.x +=
-        (-pointer.y * 0.2 - groupRef.current.rotation.x) * 0.05;
+      groupRef.current.rotation.y += (pointer.x * 0.25 - groupRef.current.rotation.y) * 0.04;
+      groupRef.current.rotation.x += (-pointer.y * 0.15 - groupRef.current.rotation.x) * 0.04;
     }
 
-    // Main icosahedron slow spin
+    // Central icosahedron slow rotation
     if (icosaRef.current) {
-      icosaRef.current.rotation.x += delta * 0.08;
-      icosaRef.current.rotation.y += delta * 0.12;
+      icosaRef.current.rotation.y += delta * 0.18;
+      icosaRef.current.rotation.x += delta * 0.07;
+    }
+    if (wireRef.current) {
+      wireRef.current.rotation.y += delta * 0.18;
+      wireRef.current.rotation.x += delta * 0.07;
     }
 
-    // Torus knot spinning
-    if (torusRef.current) {
-      torusRef.current.rotation.x += delta * 0.1;
-      torusRef.current.rotation.z += delta * 0.06;
+    // Orbital rings
+    if (ring1Ref.current) {
+      ring1Ref.current.rotation.z = t * 0.3;
+      ring1Ref.current.rotation.x = Math.PI / 3;
     }
-
-    // Orbiting small sphere
-    if (sphere1Ref.current) {
-      sphere1Ref.current.position.x = Math.cos(time * 0.6) * 2.8;
-      sphere1Ref.current.position.y = Math.sin(time * 0.6) * 1.2;
-      sphere1Ref.current.position.z = Math.sin(time * 0.4) * 1;
-    }
-
-    // Second orbiting element
-    if (sphere2Ref.current) {
-      sphere2Ref.current.position.x = Math.cos(time * 0.4 + Math.PI) * 2;
-      sphere2Ref.current.position.y = Math.sin(time * 0.8) * 2;
-    }
-
-    // Ring rotation
-    if (ringRef.current) {
-      ringRef.current.rotation.x = time * 0.3;
-      ringRef.current.rotation.y = time * 0.2;
+    if (ring2Ref.current) {
+      ring2Ref.current.rotation.z = -t * 0.2;
+      ring2Ref.current.rotation.y = Math.PI / 4;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* ── Ambient + Key Lighting ── */}
-      <ambientLight intensity={0.15} color="#1e40af" />
-      <pointLight position={[4, 4, 4]} intensity={60} color="#3b82f6" decay={2} />
-      <pointLight position={[-4, -3, 2]} intensity={30} color="#818cf8" decay={2} />
-      <pointLight position={[0, 6, -4]} intensity={20} color="#60a5fa" decay={2} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#e0f2fe" />
+      {/* ── Lights — minimal, clean ── */}
+      <ambientLight intensity={0.1} />
+      <pointLight position={[3, 3, 4]} intensity={40} color="#2563EB" decay={2} />
+      <pointLight position={[-4, -2, 2]} intensity={15} color="#1D4ED8" decay={2} />
+      <directionalLight position={[0, 5, 5]} intensity={1.2} color="#BFDBFE" />
 
-      {/* ── Main Central Icosahedron (glass-like) ── */}
-      <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.6}>
-        <mesh ref={icosaRef} position={[0.3, 0, 0]} castShadow>
-          <icosahedronGeometry args={[1.4, 1]} />
-          <MeshDistortMaterial
-            color="#3b82f6"
-            roughness={0.0}
-            metalness={0.9}
-            distort={0.15}
-            speed={2}
-            transparent
-            opacity={0.85}
-            envMapIntensity={2}
-          />
-        </mesh>
-      </Float>
-
-      {/* ── Wireframe overlay on icosahedron ── */}
-      <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.6}>
-        <mesh position={[0.3, 0, 0]}>
-          <icosahedronGeometry args={[1.42, 1]} />
-          <meshBasicMaterial
-            color="#60a5fa"
-            wireframe
-            transparent
-            opacity={0.2}
-          />
-        </mesh>
-      </Float>
-
-      {/* ── Torus Knot ── */}
-      <Float speed={1.8} rotationIntensity={0.8} floatIntensity={0.4}>
-        <mesh ref={torusRef} position={[3.2, -0.8, -1.5]} scale={0.7}>
-          <torusKnotGeometry args={[0.8, 0.22, 128, 16]} />
-          <meshStandardMaterial
-            color="#818cf8"
-            roughness={0.05}
-            metalness={0.95}
-            emissive="#3730a3"
-            emissiveIntensity={0.4}
-          />
-        </mesh>
-      </Float>
-
-      {/* ── Orbiting Sphere 1 (chrome) ── */}
-      <mesh ref={sphere1Ref} position={[2.5, 0, 0]} scale={0.22}>
-        <sphereGeometry args={[1, 32, 32]} />
+      {/* ── Central Icosahedron: solid + wireframe ── */}
+      {/* Solid core */}
+      <mesh ref={icosaRef} position={[0, 0, 0]}>
+        <icosahedronGeometry args={[1.6, 1]} />
         <meshStandardMaterial
-          color="#bfdbfe"
-          roughness={0}
-          metalness={1}
-          emissive="#60a5fa"
-          emissiveIntensity={0.5}
+          color="#1236A0"
+          roughness={0.15}
+          metalness={0.85}
+          emissive="#1D4ED8"
+          emissiveIntensity={0.25}
         />
       </mesh>
-
-      {/* ── Orbiting Sphere 2 ── */}
-      <mesh ref={sphere2Ref} position={[-2, 1.5, -0.5]} scale={0.15}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial
-          color="#a5b4fc"
-          roughness={0.1}
-          metalness={0.9}
-          emissive="#4f46e5"
-          emissiveIntensity={0.6}
-        />
+      {/* Wireframe shell */}
+      <mesh ref={wireRef} position={[0, 0, 0]}>
+        <icosahedronGeometry args={[1.63, 1]} />
+        <meshBasicMaterial color="#60A5FA" wireframe transparent opacity={0.18} />
       </mesh>
 
-      {/* ── Rotating Ring ── */}
-      <Float speed={0.8} floatIntensity={0.3}>
-        <mesh ref={ringRef} position={[-2.5, 1.2, -1]} scale={0.6}>
-          <torusGeometry args={[1, 0.04, 16, 80]} />
-          <meshStandardMaterial
-            color="#38bdf8"
-            roughness={0.1}
-            metalness={0.8}
-            emissive="#0ea5e9"
-            emissiveIntensity={0.5}
-            transparent
-            opacity={0.7}
-          />
-        </mesh>
-      </Float>
+      {/* ── Thin orbital rings ── */}
+      <mesh ref={ring1Ref} position={[0, 0, 0]}>
+        <torusGeometry args={[2.4, 0.012, 8, 120]} />
+        <meshBasicMaterial color="#2563EB" transparent opacity={0.5} />
+      </mesh>
+      <mesh ref={ring2Ref} position={[0, 0, 0]}>
+        <torusGeometry args={[2.9, 0.008, 8, 140]} />
+        <meshBasicMaterial color="#F59E0B" transparent opacity={0.3} />
+      </mesh>
 
-      {/* ── Small floating octahedron ── */}
-      <Float speed={2.5} rotationIntensity={2} floatIntensity={1}>
-        <mesh position={[-1.5, -1.8, 0.5]} scale={0.35}>
-          <octahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial
-            color="#7dd3fc"
-            roughness={0.2}
-            metalness={0.8}
-            emissive="#0369a1"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-      </Float>
+      {/* ── Small accent spheres ── */}
+      <mesh position={[2.2, 0.8, 0.3]}>
+        <sphereGeometry args={[0.12, 12, 12]} />
+        <meshStandardMaterial color="#F59E0B" emissive="#D97706" emissiveIntensity={1} />
+      </mesh>
+      <mesh position={[-1.8, -1.2, 0.8]}>
+        <sphereGeometry args={[0.08, 12, 12]} />
+        <meshStandardMaterial color="#60A5FA" emissive="#3B82F6" emissiveIntensity={1} />
+      </mesh>
 
-      {/* ── Particle field ── */}
+      {/* ── Particles (sphere distribution) ── */}
       <points>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[particles, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[particles, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.025}
-          color="#60a5fa"
+          size={0.022}
+          color="#3B82F6"
           transparent
-          opacity={0.55}
+          opacity={0.5}
           sizeAttenuation
           depthWrite={false}
         />
       </points>
-
-      {/* ── Sparkles ── */}
-      <Sparkles
-        count={60}
-        scale={10}
-        size={0.6}
-        speed={0.4}
-        color="#93c5fd"
-        opacity={0.5}
-      />
     </group>
+  );
+}
+
+export default function FloatingObjects() {
+  return (
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-60" aria-hidden="true">
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+        <FloatingObjectsScene />
+      </Canvas>
+    </div>
   );
 }
