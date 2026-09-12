@@ -196,6 +196,29 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-brand-accent);
 }
 
+/* ─── Marquee Animation ────────────────────────────────────────────────── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  display: flex;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+
 /* ─── Grid BG ─────────────────────────────────────────────────────────── */
 .bg-grid-premium {
   background-image: 

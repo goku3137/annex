@@ -3,6 +3,7 @@ import Courses from "@/components/sections/Courses";
 import About from "@/components/sections/About";
 import Testimonials from "@/components/sections/Testimonials";
 import Link from "next/link";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 /* ── Minimalist Trusted By Section ──────────────────────────────────────── */
 function TrustedBySection() {
@@ -17,12 +18,26 @@ function TrustedBySection() {
           <p style={{ fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-brand-text-muted)' }}>
             Recognized By
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '3rem' }}>
-            {partners.map(partner => (
-              <span key={partner} style={{ fontSize: '0.9rem', fontWeight: 'bold', letterSpacing: '0.1em', color: 'rgba(255, 255, 255, 0.5)', transition: 'color 0.3s ease' }} className="hover-glow">
-                {partner}
-              </span>
-            ))}
+          <div className="marquee-container" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+            <div className="marquee-content">
+              {/* Double the array for seamless looping */}
+              {[...partners, ...partners, ...partners].map((partner, idx) => (
+                <span 
+                  key={`${partner}-${idx}`} 
+                  style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: 'bold', 
+                    letterSpacing: '0.1em', 
+                    color: 'rgba(255, 255, 255, 0.5)', 
+                    transition: 'color 0.3s ease',
+                    marginRight: '4rem'
+                  }} 
+                  className="hover-glow"
+                >
+                  {partner}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -38,21 +53,28 @@ function FinalCTA() {
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, var(--color-brand-accent-glow) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
       <div className="premium-container" style={{ padding: '0 5%', textAlign: 'center', position: 'relative', zIndex: 10 }}>
-        <h2 className="premium-title fade-up stagger-1" style={{ textTransform: 'uppercase', marginBottom: '1.5rem', fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}>
-          Advance<br />Your Career
-        </h2>
-        <p className="premium-subtitle fade-up stagger-2">
-          Join a prestigious network of professionals who have accelerated their trajectories with our industry-aligned programs.
-        </p>
+        <ScrollReveal>
+          <h2 className="premium-title" style={{ textTransform: 'uppercase', marginBottom: '1.5rem', fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}>
+            Advance<br />Your Career
+          </h2>
+        </ScrollReveal>
+        
+        <ScrollReveal delay={0.2}>
+          <p className="premium-subtitle">
+            Join a prestigious network of professionals who have accelerated their trajectories with our industry-aligned programs.
+          </p>
+        </ScrollReveal>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5rem', marginTop: '3rem' }} className="fade-up stagger-3">
-          <Link href="/contact" className="btn-premium">
-            Apply Now
-          </Link>
-          <Link href="/courses" className="btn-premium-outline">
-            View Programs
-          </Link>
-        </div>
+        <ScrollReveal delay={0.4}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5rem', marginTop: '3rem' }}>
+            <Link href="/contact" className="btn-premium">
+              Apply Now
+            </Link>
+            <Link href="/courses" className="btn-premium-outline">
+              View Programs
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

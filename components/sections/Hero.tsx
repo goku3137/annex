@@ -5,22 +5,13 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const HeroScene = dynamic(() => import("@/components/3d/HeroScene"), { ssr: false });
-const AtmosphericParticles = dynamic(() => import("@/components/3d/AtmosphericParticles"), { ssr: false });
 
 export default function Hero() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', paddingTop: '140px' }}>
       {/* 3D Background */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.8 }}>
-        {mounted && (
-          <>
-            <HeroScene />
-            <AtmosphericParticles />
-          </>
-        )}
+        <HeroScene />
       </div>
       
       {/* Overlay to ensure text readability */}
